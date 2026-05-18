@@ -23,7 +23,7 @@
       </view>
     </view>
     <view class="location-info">
-      <text class="location-text">{{location.city || '定位中...'}}</text>
+      <text class="location-text">📍 {{location.city}}</text>
       <text class="update-time">{{updateTime}}</text>
     </view>
   </view>

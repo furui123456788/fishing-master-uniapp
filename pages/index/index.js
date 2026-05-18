@@ -85,19 +85,22 @@ Page({
   // IP网络定位
   getIPLocation() {
     wx.request({
-      url: 'https://ipapi.co/json/',
+      url: 'https://ipapi.co/json/?lang=zh-CN',
       timeout: 3000,
       success: (res) => {
         const data = res.data;
         if (data && data.latitude && data.longitude) {
-          const location = {
+          const cityName = data.city || data.region || '当前位置';
+          console.log('IP定位成功:', cityName, data.latitude, data.longitude);
+          this.setData({
+            'location.city': cityName,
+            'location.latitude': data.latitude,
+            'location.longitude': data.longitude
+          });
+          this.fetchWeather({
             latitude: data.latitude,
-            longitude: data.longitude,
-            city: data.city || '当前位置'
-          };
-          this.setData({ location: location });
-          this.fetchWeather(location);
-          // IP定位成功，关闭loading
+            longitude: data.longitude
+          });
           this.setData({ loading: false });
           return;
         }
