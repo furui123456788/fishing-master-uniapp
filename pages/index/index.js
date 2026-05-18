@@ -135,21 +135,31 @@ Page({
 
   // 获取天气数据
   fetchWeather(location) {
+    // 先显示位置（如果有城市名）
+    if (location.city) {
+      this.setData({
+        'location.city': location.city
+      });
+    }
+    
     api.getWeather({
       latitude: location.latitude,
       longitude: location.longitude,
       success: (res) => {
-        if (res && res.data) {
+        console.log('天气API返回:', res);
+        // API返回格式: { code, data, message }
+        const weatherData = res.data || res;
+        if (weatherData) {
           this.setData({
             weather: {
-              temperature: res.data.temperature || 25,
-              description: res.data.description || '晴',
-              humidity: res.data.humidity || 65,
-              windSpeed: res.data.windSpeed || 3.5,
-              pressure: res.data.pressure || 1013
+              temperature: weatherData.temperature || 25,
+              description: weatherData.description || '晴',
+              humidity: weatherData.humidity || 65,
+              windSpeed: weatherData.windSpeed || 3.5,
+              pressure: weatherData.pressure || 1013
             }
           });
-          this.calculateFishingIndex(res.data);
+          this.calculateFishingIndex(weatherData);
         }
       },
       fail: (err) => {
