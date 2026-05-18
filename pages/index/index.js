@@ -1,8 +1,6 @@
 const api = require('../../utils/api.js');
 const util = require('../../utils/util.js');
 
-const app = getApp();
-
 Page({
   data: {
     loading: false,
