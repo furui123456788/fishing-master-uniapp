@@ -74,47 +74,58 @@ Page({
     });
   },
 
-  // 获取位置和天气
+  // 获取位置和天气（先用IP定位，快）
   getLocationAndWeather() {
     this.setData({ loading: true });
     
+    // 第一步：IP网络定位（1-2秒）
+    this.getIPLocation();
+  },
+
+  // IP网络定位
+  getIPLocation() {
+    wx.request({
+      url: 'https://ipapi.co/json/',
+      timeout: 3000,
+      success: (res) => {
+        const data = res.data;
+        if (data && data.latitude && data.longitude) {
+          const location = {
+            latitude: data.latitude,
+            longitude: data.longitude,
+            city: data.city || '当前位置'
+          };
+          this.setData({ location: location });
+          this.fetchWeather(location);
+          return;
+        }
+        this.fallbackToGPS();
+      },
+      fail: () => {
+        this.fallbackToGPS();
+      }
+    });
+  },
+
+  // IP定位失败，用GPS
+  fallbackToGPS() {
     wx.getLocation({
       type: 'wgs84',
       success: (res) => {
         const location = {
           latitude: res.latitude,
-          longitude: res.longitude
+          longitude: res.longitude,
+          city: '当前位置'
         };
-        
-        // 获取城市名称
-        this.getCityName(location);
-        
-        // 获取天气数据
+        this.setData({ location: location });
         this.fetchWeather(location);
       },
-      fail: (err) => {
-        console.error('获取位置失败:', err);
-        wx.showToast({
-          title: '获取位置失败，使用默认位置',
-          icon: 'none'
-        });
-        // 使用默认位置获取天气
+      fail: () => {
+        wx.showToast({ title: '定位失败，使用默认', icon: 'none' });
         this.fetchWeather(this.data.location);
       },
       complete: () => {
         this.setData({ loading: false });
-      }
-    });
-  },
-
-  // 获取城市名称
-  getCityName(location) {
-    // 这里可以使用逆地理编码API
-    // 简化处理，使用默认城市
-    this.setData({
-      location: {
-        ...location,
-        city: '当前位置'
       }
     });
   },
