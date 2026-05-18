@@ -1,0 +1,108 @@
+<view class="container">
+  <!-- 天气卡片 -->
+  <view class="card weather-card">
+    <view class="card-title">今日天气</view>
+    <view class="weather-content">
+      <view class="weather-main">
+        <text class="weather-temp">{{weather.temperature}}°</text>
+        <text class="weather-desc">{{weather.description}}</text>
+      </view>
+      <view class="weather-info">
+        <view class="info-item">
+          <text class="info-label">湿度</text>
+          <text class="info-value">{{weather.humidity}}%</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">风速</text>
+          <text class="info-value">{{weather.windSpeed}}m/s</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">气压</text>
+          <text class="info-value">{{weather.pressure}}hPa</text>
+        </view>
+      </view>
+    </view>
+    <view class="location-info">
+      <text class="location-text">{{location.city || '定位中...'}}</text>
+      <text class="update-time">{{updateTime}}</text>
+    </view>
+  </view>
+
+  <!-- 钓鱼指数卡片 -->
+  <view class="card fishing-index-card">
+    <view class="card-title">钓鱼指数</view>
+    <view class="index-content">
+      <view class="index-circle">
+        <text class="index-score">{{fishingIndex.score}}</text>
+        <text class="index-level">{{fishingIndex.level}}</text>
+      </view>
+      <view class="index-details">
+        <view class="detail-item">
+          <text class="detail-label">最佳时段</text>
+          <text class="detail-value">{{fishingIndex.bestTime}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">推荐钓位</text>
+          <text class="detail-value">{{fishingIndex.position}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">目标鱼种</text>
+          <text class="detail-value">{{fishingIndex.targetFish}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="index-tips">
+      <text class="tips-text">{{fishingIndex.tips}}</text>
+    </view>
+  </view>
+
+  <!-- 快速操作 -->
+  <view class="card quick-actions">
+    <view class="card-title">快速操作</view>
+    <view class="actions-grid">
+      <view class="action-item" bindtap="goToCamera">
+        <view class="action-icon camera-icon">
+          <text class="icon-text">📷</text>
+        </view>
+        <text class="action-text">AI识别</text>
+      </view>
+      <view class="action-item" bindtap="goToEquipment">
+        <view class="action-icon equipment-icon">
+          <text class="icon-text">🎣</text>
+        </view>
+        <text class="action-text">装备推荐</text>
+      </view>
+      <view class="action-item" bindtap="goToRecords">
+        <view class="action-icon records-icon">
+          <text class="icon-text">📋</text>
+        </view>
+        <text class="action-text">钓鱼记录</text>
+      </view>
+      <view class="action-item" bindtap="refreshWeather">
+        <view class="action-icon refresh-icon">
+          <text class="icon-text">🔄</text>
+        </view>
+        <text class="action-text">刷新天气</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日建议 -->
+  <view class="card suggestions-card">
+    <view class="card-title">今日建议</view>
+    <view class="suggestions-list">
+      <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="index">
+        <view class="suggestion-icon">{{item.icon}}</view>
+        <view class="suggestion-content">
+          <text class="suggestion-title">{{item.title}}</text>
+          <text class="suggestion-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

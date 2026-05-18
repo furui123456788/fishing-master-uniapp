@@ -1,0 +1,395 @@
+/* 钓鱼记录页面样式 */
+
+/* 统计卡片 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 10rpx;
+  background-color: var(--bg-tertiary);
+  border-radius: 12rpx;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--accent-blue);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+  margin-top: 8rpx;
+}
+
+/* 添加记录按钮 */
+.add-record-section {
+  margin-bottom: 10rpx;
+}
+
+.add-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+  font-weight: 300;
+}
+
+/* 记录列表 */
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.record-item {
+  background-color: var(--bg-tertiary);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  border: 1rpx solid var(--border-color);
+}
+
+.record-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.record-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, #1f6feb 100%);
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.date-day {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.date-month {
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 4rpx;
+}
+
+.record-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.record-location {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.record-weather {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+.record-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-btn {
+  font-size: 22rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.action-btn.edit {
+  color: var(--accent-blue);
+  background-color: rgba(88, 166, 255, 0.15);
+}
+
+.action-btn.delete {
+  color: var(--accent-red);
+  background-color: rgba(218, 54, 51, 0.15);
+}
+
+.record-content {
+  margin-bottom: 16rpx;
+}
+
+.fish-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.fish-tag {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 10rpx 16rpx;
+  background-color: var(--bg-secondary);
+  border-radius: 8rpx;
+}
+
+.fish-name {
+  font-size: 24rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.fish-count {
+  font-size: 22rpx;
+  color: var(--accent-green);
+}
+
+.fish-weight {
+  font-size: 22rpx;
+  color: var(--accent-yellow);
+}
+
+.record-note {
+  padding: 16rpx;
+  background-color: var(--bg-secondary);
+  border-radius: 8rpx;
+}
+
+.note-text {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.record-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--border-color);
+}
+
+.record-time {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.record-total {
+  font-size: 24rpx;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  width: 100%;
+  max-height: 85vh;
+  background-color: var(--bg-secondary);
+  border-radius: 32rpx 32rpx 0 0;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: var(--text-secondary);
+  line-height: 1;
+  padding: 0 10rpx;
+}
+
+.modal-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.form-scroll {
+  max-height: 60vh;
+  padding: 30rpx;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 16rpx;
+}
+
+.form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.form-add {
+  font-size: 24rpx;
+  color: var(--accent-blue);
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  background-color: var(--bg-tertiary);
+  border: 1rpx solid var(--border-color);
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 160rpx;
+  padding: 20rpx 24rpx;
+  background-color: var(--bg-tertiary);
+  border: 1rpx solid var(--border-color);
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+.weather-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.weather-option {
+  padding: 16rpx 32rpx;
+  background-color: var(--bg-tertiary);
+  border: 1rpx solid var(--border-color);
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.weather-option.active {
+  background-color: rgba(88, 166, 255, 0.15);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.fish-input-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.fish-input-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.fish-name-input {
+  flex: 2;
+  height: 72rpx;
+  padding: 0 16rpx;
+  background-color: var(--bg-tertiary);
+  border: 1rpx solid var(--border-color);
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: var(--text-primary);
+}
+
+.fish-count-input,
+.fish-weight-input {
+  flex: 1;
+  height: 72rpx;
+  padding: 0 16rpx;
+  background-color: var(--bg-tertiary);
+  border: 1rpx solid var(--border-color);
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.fish-delete {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(218, 54, 51, 0.15);
+  color: var(--accent-red);
+  border-radius: 50%;
+  font-size: 28rpx;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx 30rpx 50rpx;
+  border-top: 1rpx solid var(--border-color);
+}
+
+.modal-footer .btn {
+  flex: 1;
+}

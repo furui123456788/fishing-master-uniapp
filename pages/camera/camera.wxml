@@ -1,0 +1,133 @@
+<view class="camera-container">
+  <!-- 相机预览区域 -->
+  <view class="camera-wrapper">
+    <camera
+      class="camera"
+      device-position="{{devicePosition}}"
+      flash="{{flash}}"
+      resolution="high"
+      frame-size="large"
+      binderror="onCameraError"
+      bindstop="onCameraStop"
+      bindinitdone="onCameraInit"
+    ></camera>
+    
+    <!-- 浮漂标记区域 -->
+    <view class="marker-overlay">
+      <view 
+        class="float-marker {{isDragging ? 'dragging' : ''}}"
+        style="left: {{markerX}}px; top: {{markerY}}px;"
+        bindtouchstart="onMarkerTouchStart"
+        bindtouchmove="onMarkerTouchMove"
+        bindtouchend="onMarkerTouchEnd"
+      >
+        <view class="marker-crosshair">
+          <view class="crosshair-h"></view>
+          <view class="crosshair-v"></view>
+        </view>
+        <view class="marker-ring"></view>
+        <view class="marker-label">浮漂位置</view>
+      </view>
+    </view>
+
+    <!-- 网格线 -->
+    <view class="grid-overlay" wx:if="{{showGrid}}">
+      <view class="grid-line grid-h1"></view>
+      <view class="grid-line grid-h2"></view>
+      <view class="grid-line grid-v1"></view>
+      <view class="grid-line grid-v2"></view>
+    </view>
+  </view>
+
+  <!-- 控制面板 -->
+  <view class="control-panel">
+    <!-- 顶部控制栏 -->
+    <view class="top-controls">
+      <view class="control-btn" bindtap="toggleFlash">
+        <text class="btn-icon">{{flash === 'on' ? '🔦' : '⚫'}}</text>
+        <text class="btn-text">{{flash === 'on' ? '闪光灯开' : '闪光灯关'}}</text>
+      </view>
+      <view class="control-btn" bindtap="toggleCamera">
+        <text class="btn-icon">🔄</text>
+        <text class="btn-text">切换镜头</text>
+      </view>
+      <view class="control-btn" bindtap="toggleGrid">
+        <text class="btn-icon">#</text>
+        <text class="btn-text">{{showGrid ? '网格开' : '网格关'}}</text>
+      </view>
+    </view>
+
+    <!-- 缩放控制 -->
+    <view class="zoom-control">
+      <text class="zoom-label">缩放</text>
+      <slider 
+        class="zoom-slider"
+        min="1"
+        max="{{maxZoom}}"
+        step="0.1"
+        value="{{zoom}}"
+        bindchange="onZoomChange"
+        block-size="24"
+        activeColor="#58a6ff"
+        backgroundColor="#30363d"
+      />
+      <text class="zoom-value">{{zoom.toFixed(1)}}x</text>
+    </view>
+
+    <!-- 识别状态 -->
+    <view class="recognition-status">
+      <view class="status-indicator {{isRecognizing ? 'active' : ''}}">
+        <view class="status-dot"></view>
+        <text class="status-text">{{isRecognizing ? '识别中' : '待识别'}}</text>
+      </view>
+      <view class="confidence-score" wx:if="{{confidence > 0}}">
+        <text class="score-label">置信度</text>
+        <text class="score-value">{{confidence}}%</text>
+      </view>
+    </view>
+
+    <!-- 识别结果 -->
+    <view class="recognition-result" wx:if="{{recognitionResult}}">
+      <view class="result-header">
+        <text class="result-title">识别结果</text>
+        <text class="result-time">{{recognitionTime}}</text>
+      </view>
+      <view class="result-content">
+        <view class="result-item">
+          <text class="result-label">状态</text>
+          <text class="result-value {{recognitionResult.type}}">{{recognitionResult.text}}</text>
+        </view>
+        <view class="result-item" wx:if="{{recognitionResult.movement}}">
+          <text class="result-label">动作</text>
+          <text class="result-value">{{recognitionResult.movement}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="bottom-controls">
+      <view class="control-btn secondary" bindtap="resetMarker">
+        <text class="btn-icon">📍</text>
+        <text class="btn-text">重置标记</text>
+      </view>
+      <view class="capture-btn {{isRecognizing ? 'recognizing' : ''}}" bindtap="toggleRecognition">
+        <view class="capture-inner">
+          <text class="capture-icon">{{isRecognizing ? '⏹' : '▶'}}</text>
+        </view>
+      </view>
+      <view class="control-btn secondary" bindtap="takePhoto">
+        <text class="btn-icon">📷</text>
+        <text class="btn-text">拍照</text>
+      </view>
+    </view>
+
+    <!-- 提示信息 -->
+    <view class="tips-section">
+      <text class="tips-title">使用提示</text>
+      <text class="tips-text">1. 将浮漂置于标记框内</text>
+      <text class="tips-text">2. 调整缩放使浮漂清晰可见</text>
+      <text class="tips-text">3. 点击开始识别按钮</text>
+      <text class="tips-text">4. 拖动标记框可调整位置</text>
+    </view>
+  </view>
+</view>

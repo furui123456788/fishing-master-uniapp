@@ -1,0 +1,147 @@
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="card stats-card">
+    <view class="card-title">数据统计</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.totalCount}}</text>
+        <text class="stat-label">总次数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.totalWeight}}</text>
+        <text class="stat-label">总重量(kg)</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.totalFish}}</text>
+        <text class="stat-label">总尾数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.bestWeight}}</text>
+        <text class="stat-label">单尾最重(kg)</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加记录按钮 -->
+  <view class="add-record-section">
+    <button class="btn btn-primary add-btn" bindtap="showAddModal">
+      <text class="btn-icon">+</text>
+      <text>添加新记录</text>
+    </button>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="card records-card">
+    <view class="card-title">历史记录</view>
+    <view class="records-list" wx:if="{{records.length > 0}}">
+      <view class="record-item" wx:for="{{records}}" wx:key="id">
+        <view class="record-header">
+          <view class="record-date">
+            <text class="date-day">{{item.day}}</text>
+            <text class="date-month">{{item.month}}月</text>
+          </view>
+          <view class="record-info">
+            <text class="record-location">{{item.location}}</text>
+            <text class="record-weather">{{item.weather}}</text>
+          </view>
+          <view class="record-actions">
+            <text class="action-btn edit" bindtap="editRecord" data-id="{{item.id}}">编辑</text>
+            <text class="action-btn delete" bindtap="deleteRecord" data-id="{{item.id}}">删除</text>
+          </view>
+        </view>
+        <view class="record-content">
+          <view class="fish-list">
+            <view class="fish-tag" wx:for="{{item.fishList}}" wx:for-item="fish" wx:key="index">
+              <text class="fish-name">{{fish.name}}</text>
+              <text class="fish-count">{{fish.count}}尾</text>
+              <text class="fish-weight" wx:if="{{fish.weight}}">{{fish.weight}}kg</text>
+            </view>
+          </view>
+          <view class="record-note" wx:if="{{item.note}}">
+            <text class="note-text">{{item.note}}</text>
+          </view>
+        </view>
+        <view class="record-footer">
+          <text class="record-time">{{item.time}}</text>
+          <text class="record-total" wx:if="{{item.totalWeight}}">共 {{item.totalWeight}}kg</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{records.length === 0}}">
+      <text class="empty-icon">📋</text>
+      <text>暂无钓鱼记录</text>
+      <text class="empty-tip">点击上方按钮添加第一条记录</text>
+    </view>
+  </view>
+
+  <!-- 添加/编辑记录弹窗 -->
+  <view class="modal {{showModal ? 'show' : ''}}" bindtap="hideModal">
+    <view class="modal-content" catchtap="preventBubble">
+      <view class="modal-header">
+        <text class="modal-title">{{isEditing ? '编辑记录' : '添加记录'}}</text>
+        <text class="modal-close" bindtap="hideModal">×</text>
+      </view>
+      <view class="modal-body">
+        <scroll-view class="form-scroll" scroll-y>
+          <!-- 日期时间 -->
+          <view class="form-item">
+            <text class="form-label">日期时间</text>
+            <picker mode="multiSelector" range="{{dateRange}}" value="{{dateIndex}}" bindchange="onDateChange">
+              <view class="form-input">{{formData.date}} {{formData.time}}</view>
+            </picker>
+          </view>
+
+          <!-- 钓点 -->
+          <view class="form-item">
+            <text class="form-label">钓点位置</text>
+            <input class="form-input" placeholder="请输入钓点名称" value="{{formData.location}}" bindinput="onLocationInput"/>
+          </view>
+
+          <!-- 天气 -->
+          <view class="form-item">
+            <text class="form-label">天气情况</text>
+            <view class="weather-options">
+              <view 
+                class="weather-option {{formData.weather === item ? 'active' : ''}}"
+                wx:for="{{weatherOptions}}"
+                wx:key="*this"
+                data-weather="{{item}}"
+                bindtap="selectWeather"
+              >
+                {{item}}
+              </view>
+            </view>
+          </view>
+
+          <!-- 渔获信息 -->
+          <view class="form-item">
+            <view class="form-label-row">
+              <text class="form-label">渔获信息</text>
+              <text class="form-add" bindtap="addFish">+ 添加鱼种</text>
+            </view>
+            <view class="fish-input-list">
+              <view class="fish-input-item" wx:for="{{formData.fishList}}" wx:key="index">
+                <input class="fish-name-input" placeholder="鱼种" value="{{item.name}}" data-index="{{index}}" data-field="name" bindinput="onFishInput"/>
+                <input class="fish-count-input" type="number" placeholder="尾数" value="{{item.count}}" data-index="{{index}}" data-field="count" bindinput="onFishInput"/>
+                <input class="fish-weight-input" type="digit" placeholder="重量(kg)" value="{{item.weight}}" data-index="{{index}}" data-field="weight" bindinput="onFishInput"/>
+                <text class="fish-delete" data-index="{{index}}" bindtap="removeFish">×</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 备注 -->
+          <view class="form-item">
+            <text class="form-label">备注</text>
+            <textarea class="form-textarea" placeholder="记录钓鱼心得、饵料配方等..." value="{{formData.note}}" bindinput="onNoteInput"/>
+          </view>
+        </scroll-view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-secondary" bindtap="hideModal">取消</button>
+        <button class="btn btn-primary" bindtap="saveRecord">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,242 @@
+/* 首页样式 */
+
+/* 天气卡片 */
+.weather-card {
+  background: linear-gradient(135deg, #1f6feb 0%, #1158c7 100%);
+  border: none;
+}
+
+.weather-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.weather-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-temp {
+  font-size: 80rpx;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1;
+}
+
+.weather-desc {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 10rpx;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.info-label {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.info-value {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+.location-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.location-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.update-time {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 钓鱼指数卡片 */
+.fishing-index-card {
+  background: linear-gradient(135deg, #238636 0%, #196c2e 100%);
+  border: none;
+}
+
+.index-content {
+  display: flex;
+  align-items: center;
+  gap: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.index-circle {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.index-score {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.index-level {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 8rpx;
+}
+
+.index-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.detail-value {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+.index-tips {
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.tips-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+/* 快速操作 */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.action-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.camera-icon {
+  background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+}
+
+.equipment-icon {
+  background: linear-gradient(135deg, #238636 0%, #196c2e 100%);
+}
+
+.records-icon {
+  background: linear-gradient(135deg, #d29922 0%, #9e6a03 100%);
+}
+
+.refresh-icon {
+  background: linear-gradient(135deg, #8b949e 0%, #6e7681 100%);
+}
+
+.icon-text {
+  font-size: 40rpx;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: var(--text-primary);
+}
+
+/* 建议卡片 */
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  padding: 20rpx;
+  background-color: var(--bg-tertiary);
+  border-radius: 12rpx;
+}
+
+.suggestion-icon {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+
+.suggestion-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.suggestion-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.suggestion-desc {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}

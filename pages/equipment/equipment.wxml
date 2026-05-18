@@ -1,0 +1,150 @@
+<view class="container">
+  <!-- 场景选择 -->
+  <view class="card scene-card">
+    <view class="card-title">选择钓鱼场景</view>
+    <view class="scene-list">
+      <view 
+        class="scene-item {{selectedScene === item.id ? 'active' : ''}}"
+        wx:for="{{scenes}}"
+        wx:key="id"
+        data-scene="{{item.id}}"
+        bindtap="selectScene"
+      >
+        <text class="scene-icon">{{item.icon}}</text>
+        <text class="scene-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 目标鱼种 -->
+  <view class="card target-card">
+    <view class="card-title">目标鱼种</view>
+    <view class="fish-list">
+      <view 
+        class="fish-item {{selectedFish === item.id ? 'active' : ''}}"
+        wx:for="{{fishTypes}}"
+        wx:key="id"
+        data-fish="{{item.id}}"
+        bindtap="selectFish"
+      >
+        <text class="fish-icon">{{item.icon}}</text>
+        <text class="fish-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 装备推荐 -->
+  <view class="card equipment-card" wx:if="{{recommendation}}">
+    <view class="card-title">推荐装备</view>
+    
+    <!-- 鱼竿 -->
+    <view class="equipment-section">
+      <view class="section-header">
+        <text class="section-icon">🎣</text>
+        <text class="section-title">鱼竿</text>
+      </view>
+      <view class="equipment-list">
+        <view class="equipment-item" wx:for="{{recommendation.rods}}" wx:key="index">
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-spec">{{item.spec}}</text>
+          </view>
+          <text class="item-price">{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 鱼线 -->
+    <view class="equipment-section">
+      <view class="section-header">
+        <text class="section-icon">🧵</text>
+        <text class="section-title">鱼线</text>
+      </view>
+      <view class="equipment-list">
+        <view class="equipment-item" wx:for="{{recommendation.lines}}" wx:key="index">
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-spec">{{item.spec}}</text>
+          </view>
+          <text class="item-price">{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 鱼钩 -->
+    <view class="equipment-section">
+      <view class="section-header">
+        <text class="section-icon">🪝</text>
+        <text class="section-title">鱼钩</text>
+      </view>
+      <view class="equipment-list">
+        <view class="equipment-item" wx:for="{{recommendation.hooks}}" wx:key="index">
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-spec">{{item.spec}}</text>
+          </view>
+          <text class="item-price">{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 饵料 -->
+    <view class="equipment-section">
+      <view class="section-header">
+        <text class="section-icon">🪱</text>
+        <text class="section-title">饵料</text>
+      </view>
+      <view class="equipment-list">
+        <view class="equipment-item" wx:for="{{recommendation.baits}}" wx:key="index">
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-spec">{{item.spec}}</text>
+          </view>
+          <text class="item-price">{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 配件 -->
+    <view class="equipment-section">
+      <view class="section-header">
+        <text class="section-icon">🎒</text>
+        <text class="section-title">配件</text>
+      </view>
+      <view class="equipment-list">
+        <view class="equipment-item" wx:for="{{recommendation.accessories}}" wx:key="index">
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-spec">{{item.spec}}</text>
+          </view>
+          <text class="item-price">{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 技巧提示 -->
+  <view class="card tips-card" wx:if="{{recommendation}}">
+    <view class="card-title">钓法技巧</view>
+    <view class="tips-list">
+      <view class="tip-item" wx:for="{{recommendation.tips}}" wx:key="index">
+        <text class="tip-number">{{index + 1}}</text>
+        <text class="tip-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!recommendation}}">
+    <text class="empty-icon">🎣</text>
+    <text>请选择钓鱼场景和目标鱼种</text>
+  </view>
+</view>

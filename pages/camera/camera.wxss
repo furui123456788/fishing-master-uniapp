@@ -1,0 +1,404 @@
+/* AI浮漂识别页面样式 */
+
+.camera-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #0d1117;
+}
+
+/* 相机预览区域 */
+.camera-wrapper {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.camera {
+  width: 100%;
+  height: 100%;
+}
+
+/* 标记覆盖层 */
+.marker-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.float-marker {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.float-marker.dragging {
+  opacity: 0.8;
+}
+
+.marker-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.crosshair-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2rpx;
+  background-color: #58a6ff;
+  transform: translateY(-50%);
+}
+
+.crosshair-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2rpx;
+  height: 100%;
+  background-color: #58a6ff;
+  transform: translateX(-50%);
+}
+
+.marker-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100rpx;
+  height: 100rpx;
+  border: 4rpx solid #58a6ff;
+  border-radius: 50%;
+  box-shadow: 0 0 20rpx rgba(88, 166, 255, 0.5);
+}
+
+.marker-label {
+  position: absolute;
+  bottom: -40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  color: #58a6ff;
+  white-space: nowrap;
+  background-color: rgba(13, 17, 23, 0.8);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+/* 网格线 */
+.grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.grid-line {
+  position: absolute;
+  background-color: rgba(88, 166, 255, 0.3);
+}
+
+.grid-h1 {
+  top: 33.33%;
+  left: 0;
+  width: 100%;
+  height: 1rpx;
+}
+
+.grid-h2 {
+  top: 66.66%;
+  left: 0;
+  width: 100%;
+  height: 1rpx;
+}
+
+.grid-v1 {
+  left: 33.33%;
+  top: 0;
+  width: 1rpx;
+  height: 100%;
+}
+
+.grid-v2 {
+  left: 66.66%;
+  top: 0;
+  width: 1rpx;
+  height: 100%;
+}
+
+/* 控制面板 */
+.control-panel {
+  flex: 1;
+  padding: 20rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  overflow-y: auto;
+}
+
+/* 顶部控制栏 */
+.top-controls {
+  display: flex;
+  justify-content: space-around;
+  padding: 16rpx 0;
+  background-color: #161b22;
+  border-radius: 16rpx;
+}
+
+.control-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 24rpx;
+}
+
+.control-btn.secondary {
+  opacity: 0.8;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+}
+
+.btn-text {
+  font-size: 22rpx;
+  color: #c9d1d9;
+}
+
+/* 缩放控制 */
+.zoom-control {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 16rpx 24rpx;
+  background-color: #161b22;
+  border-radius: 16rpx;
+}
+
+.zoom-label {
+  font-size: 24rpx;
+  color: #8b949e;
+  white-space: nowrap;
+}
+
+.zoom-slider {
+  flex: 1;
+}
+
+.zoom-value {
+  font-size: 24rpx;
+  color: #58a6ff;
+  font-weight: 600;
+  min-width: 80rpx;
+  text-align: right;
+}
+
+/* 识别状态 */
+.recognition-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background-color: #161b22;
+  border-radius: 16rpx;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.status-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #8b949e;
+}
+
+.status-indicator.active .status-dot {
+  background-color: #238636;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.status-text {
+  font-size: 26rpx;
+  color: #8b949e;
+}
+
+.status-indicator.active .status-text {
+  color: #238636;
+}
+
+.confidence-score {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.score-label {
+  font-size: 24rpx;
+  color: #8b949e;
+}
+
+.score-value {
+  font-size: 28rpx;
+  color: #d29922;
+  font-weight: 600;
+}
+
+/* 识别结果 */
+.recognition-result {
+  background-color: #161b22;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  border: 2rpx solid #30363d;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.result-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #c9d1d9;
+}
+
+.result-time {
+  font-size: 22rpx;
+  color: #6e7681;
+}
+
+.result-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-label {
+  font-size: 24rpx;
+  color: #8b949e;
+}
+
+.result-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #c9d1d9;
+}
+
+.result-value.bite {
+  color: #da3633;
+}
+
+.result-value.normal {
+  color: #238636;
+}
+
+.result-value.warning {
+  color: #d29922;
+}
+
+/* 底部操作栏 */
+.bottom-controls {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.capture-btn {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background-color: #21262d;
+  border: 6rpx solid #58a6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capture-btn.recognizing {
+  border-color: #da3633;
+  animation: recording 1s infinite;
+}
+
+@keyframes recording {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+}
+
+.capture-inner {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background-color: #58a6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capture-btn.recognizing .capture-inner {
+  background-color: #da3633;
+  border-radius: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.capture-icon {
+  font-size: 40rpx;
+  color: #fff;
+}
+
+/* 提示信息 */
+.tips-section {
+  background-color: #161b22;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+}
+
+.tips-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #c9d1d9;
+  margin-bottom: 16rpx;
+}
+
+.tips-text {
+  display: block;
+  font-size: 22rpx;
+  color: #8b949e;
+  line-height: 1.6;
+  margin-bottom: 8rpx;
+}

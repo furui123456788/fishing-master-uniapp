@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/equipment/equipment",
+    "pages/camera/camera",
+    "pages/records/records"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#0d1117",
+    "navigationBarTitleText": "智能钓鱼助手",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0d1117"
+  },
+  "tabBar": {
+    "color": "#8b949e",
+    "selectedColor": "#58a6ff",
+    "backgroundColor": "#161b22",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab_home.png",
+        "selectedIconPath": "images/tab_home_active.png"
+      },
+      {
+        "pagePath": "pages/equipment/equipment",
+        "text": "装备",
+        "iconPath": "images/tab_equipment.png",
+        "selectedIconPath": "images/tab_equipment_active.png"
+      },
+      {
+        "pagePath": "pages/camera/camera",
+        "text": "AI识别",
+        "iconPath": "images/tab_camera.png",
+        "selectedIconPath": "images/tab_camera_active.png"
+      },
+      {
+        "pagePath": "pages/records/records",
+        "text": "记录",
+        "iconPath": "images/tab_records.png",
+        "selectedIconPath": "images/tab_records_active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.camera": {
+      "desc": "用于AI浮漂识别功能"
+    },
+    "scope.record": {
+      "desc": "用于录制钓鱼视频"
+    }
+  },
+  "requiredBackgroundModes": ["audio"],
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false,
+  "appid": "wx10981bc2f553385e"
+}
