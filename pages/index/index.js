@@ -97,6 +97,8 @@ Page({
           };
           this.setData({ location: location });
           this.fetchWeather(location);
+          // IP定位成功，关闭loading
+          this.setData({ loading: false });
           return;
         }
         this.fallbackToGPS();
