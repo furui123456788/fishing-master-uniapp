@@ -43,39 +43,63 @@ module.exports = {
    * @param {Function} params.fail - 失败回调
    */
   getWeather(params) {
-    // 模拟天气数据（实际项目中应调用真实天气API）
-    setTimeout(() => {
-      const mockData = {
-        code: 200,
-        data: {
-          temperature: Math.floor(Math.random() * 15) + 15, // 15-30度
-          description: ['晴', '多云', '阴', '小雨'][Math.floor(Math.random() * 4)],
-          humidity: Math.floor(Math.random() * 40) + 40, // 40-80%
-          windSpeed: (Math.random() * 5 + 1).toFixed(1), // 1-6 m/s
-          pressure: Math.floor(Math.random() * 30) + 1000, // 1000-1030 hPa
-          windDirection: ['东北', '东南', '西北', '西南'][Math.floor(Math.random() * 4)],
-          uvIndex: Math.floor(Math.random() * 10),
-          visibility: Math.floor(Math.random() * 10) + 10,
-          sunrise: '06:15',
-          sunset: '18:45'
-        },
-        message: 'success'
-      };
-
-      if (params.success) {
-        params.success(mockData);
+    const API_KEY = '9b39ba30bae0edf33003ffc37d234116';
+    
+    wx.request({
+      url: `https://api.openweathermap.org/data/2.5/weather?lat=${params.latitude}&lon=${params.longitude}&appid=${API_KEY}&units=metric&lang=zh_cn`,
+      timeout: 10000,
+      success: (res) => {
+        if (res.statusCode === 200 && res.data) {
+          const weatherData = {
+            code: 200,
+            data: {
+              temperature: Math.round(res.data.main.temp),
+              description: res.data.weather[0]?.description || '晴',
+              humidity: res.data.main.humidity,
+              windSpeed: res.data.wind?.speed || 0,
+              pressure: res.data.main.pressure,
+              windDirection: this.getWindDirection(res.data.wind?.deg),
+              visibility: res.data.visibility ? (res.data.visibility / 1000).toFixed(1) : 10,
+              sunrise: new Date(res.data.sys.sunrise * 1000).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'}),
+              sunset: new Date(res.data.sys.sunset * 1000).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'})
+            },
+            message: 'success'
+          };
+          if (params.success) params.success(weatherData);
+        } else {
+          console.error('天气API错误:', res);
+          if (params.fail) params.fail(new Error('获取天气失败'));
+        }
+      },
+      fail: (err) => {
+        console.error('天气请求失败:', err);
+        // 失败时使用模拟数据
+        const mockData = {
+          code: 200,
+          data: {
+            temperature: 25,
+            description: '晴',
+            humidity: 65,
+            windSpeed: 3.5,
+            pressure: 1013,
+            windDirection: '东北',
+            visibility: 10,
+            sunrise: '06:15',
+            sunset: '18:45'
+          },
+          message: 'mock'
+        };
+        if (params.success) params.success(mockData);
       }
-    }, 500);
+    });
+  },
 
-    // 实际API调用示例：
-    // request({
-    //   url: `/weather?lat=${params.latitude}&lon=${params.longitude}`,
-    //   method: 'GET'
-    // }).then(data => {
-    //   if (params.success) params.success(data);
-    // }).catch(err => {
-    //   if (params.fail) params.fail(err);
-    // });
+  // 风向角度转文字
+  getWindDirection(deg) {
+    if (!deg) return '无风';
+    const directions = ['北', '东北', '东', '东南', '南', '西南', '西', '西北'];
+    const index = Math.round(deg / 45) % 8;
+    return directions[index] + '风';
   },
 
   /**
